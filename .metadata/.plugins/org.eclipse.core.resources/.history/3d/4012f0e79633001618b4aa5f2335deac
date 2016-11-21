@@ -1,0 +1,80 @@
+package com.session6.classdemo;
+
+import java.util.StringTokenizer;
+import java.util.concurrent.TimeUnit;
+
+import org.junit.Assert;
+import org.junit.Test;
+import org.openqa.jetty.html.Element;
+import org.openqa.selenium.By;
+import org.openqa.selenium.ElementNotVisibleException;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxProfile;
+import org.openqa.selenium.firefox.internal.ProfilesIni;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
+
+public class Assignment 
+{
+	@Test
+	public void test() throws InterruptedException
+	{
+		/*ProfilesIni profile = new ProfilesIni();
+		FirefoxProfile fp = profile.getProfile("default");
+		DesiredCapabilities dc = new DesiredCapabilities().firefox();
+		dc.setCapability(FirefoxDriver.PROFILE, profile);
+		WebDriver wd = new FirefoxDriver(dc);
+		System.setProperty("webdriver.chrome.driver", "d://chromedriver.exe");
+		WebDriver wd = new ChromeDriver();
+		
+		wd.get("https://www.ecwid.com/in/demo");
+		wd.manage().window().maximize();
+		
+		FluentWait<WebDriver> waitF = new FluentWait<WebDriver>(wd)
+				.withTimeout(200, TimeUnit.SECONDS)
+				.pollingEvery(100, TimeUnit.MILLISECONDS)
+				.ignoring(ElementNotVisibleException.class,NoSuchElementException.class);
+		WebElement search = waitF.until(ExpectedConditions.presenceOfElementLocated(By.xpath(".//*[@id='ecwid-search']/div/input")));
+		
+		search.sendKeys("Toy");
+		
+		waitF.until(ExpectedConditions.elementToBeClickable(By.xpath(".//*[@id='ecwid-search']/div/button"))).click();
+		
+		WebElement searchCount = waitF.until(ExpectedConditions.presenceOfElementLocated(By.xpath(".//*[@id='ecwid-products']/div/div/div/div/table/tbody/tr[2]/td/div/div/div[3]/div/div[1]/div")));
+		
+		String noOfSearchResult = searchCount.getText();*/
+		String noOfSearchResult = "Showing 1-5 of 21 results";
+		System.out.println("Search Result String: "+noOfSearchResult);
+		String count=null;
+		StringTokenizer str = new StringTokenizer(noOfSearchResult," ");
+		try
+		{
+			System.out.println("Executed");
+			while(str.hasMoreTokens())
+			{
+				System.out.println(count);
+				str.nextToken();
+				count = str.nextToken();
+			}
+		}catch(NoSuchElementException no)
+		{
+			System.out.println(count);
+		}
+		Assert.assertEquals(21,count);
+		
+		//Selecting Low to High
+		
+		/*new Actions(wd).click(wd.findElement(By.className("gwt-ListBox"))).build().perform();
+		new Actions(wd).moveToElement(waitF.until(ExpectedConditions.presenceOfElementLocated(By.xpath(".//*[@id='ecwid-products']/div/div/div/div/table/tbody/tr[2]/td/div/div/div[3]/div/div[2]/div[2]/select/option[3]")))).click().build().perform();	
+		wd.close();*/
+		
+		
+	}
+
+}

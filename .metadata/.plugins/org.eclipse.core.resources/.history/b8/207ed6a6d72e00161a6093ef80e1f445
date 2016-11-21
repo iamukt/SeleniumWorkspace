@@ -1,0 +1,18 @@
+package com.popup.assignment2;
+
+import org.junit.Test;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+
+public class FileUploadMis
+{
+	@Test
+	public void test()
+	{
+		WebDriver wd = new FirefoxDriver();
+		wd.get("http://cybintranet:8085/HomePage_Applications/Submit%20a%20photo.aspx");
+		String[] Param = new String[]{"C:\\Users\\umesht\\Desktop\\userauthentication.exe","Authentication Required","anc","xyz"};
+		Runtime.getRuntime().exec(Param);
+		wd.get("http://cybagemis.cybage.com/Framework/Iframe.aspx");
+	}
+}

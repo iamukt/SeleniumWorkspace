@@ -1,0 +1,20 @@
+package com.popup.assignment3;
+
+import org.junit.Test;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.interactions.Action;
+
+public class TesteHow 
+{
+	@Test
+	public void test()
+	{
+		WebDriver wd = new FirefoxDriver();
+		wd.get("http://www.ehow.com");
+		JavascriptExecutor js = ((JavascriptExecutor)wd);
+		js.executeScript("window.scrollTo(0,1800)");
+		Action act = new Action(wd);
+	}
+}

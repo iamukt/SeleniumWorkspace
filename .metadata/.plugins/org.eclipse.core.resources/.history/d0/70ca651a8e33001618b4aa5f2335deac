@@ -1,0 +1,58 @@
+package com.session6.classdemo;
+
+import java.util.StringTokenizer;
+import java.util.concurrent.TimeUnit;
+
+import org.junit.Assert;
+import org.junit.Test;
+import org.openqa.jetty.html.Element;
+import org.openqa.selenium.By;
+import org.openqa.selenium.ElementNotVisibleException;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxProfile;
+import org.openqa.selenium.firefox.internal.ProfilesIni;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
+
+public class Assignment 
+{
+	@Test
+	public void test() throws InterruptedException
+	{
+		ProfilesIni profile = new ProfilesIni();
+		FirefoxProfile fp = profile.getProfile("default");
+		DesiredCapabilities dc = new DesiredCapabilities().firefox();
+		dc.setCapability(FirefoxDriver.PROFILE, profile);
+		WebDriver wd = new FirefoxDriver(dc);
+		wd.get("https://www.ecwid.com/in/demo");
+		wd.manage().window().maximize();
+		
+		FluentWait<WebDriver> waitF = new FluentWait<WebDriver>(wd)
+				.withTimeout(20, TimeUnit.SECONDS)
+				.pollingEvery(100, TimeUnit.MILLISECONDS)
+				.ignoring(ElementNotVisibleException.class,NoSuchElementException.class);
+		WebElement search = waitF.until(ExpectedConditions.presenceOfElementLocated(By.xpath(".//*[@id='ecwid-search']/div/input")));
+		
+		search.sendKeys("Toy");
+		waitF.until(ExpectedConditions.presenceOfElementLocated(By.xpath(".//*[@id='ecwid-search']/div/button"))).click();
+		
+		WebElement searchCount = waitF.until(ExpectedConditions.presenceOfElementLocated(By.xpath(".//*[@id='ecwid-products']/div/div/div/div/table/tbody/tr[2]/td/div/div/div[3]/div/div[1]/div")));
+		
+		String noOfSearchResult = searchCount.getText();
+		System.out.println("Search Result String: "+noOfSearchResult);
+		String count=null;
+		StringTokenizer str = new StringTokenizer(noOfSearchResult," ");
+		while(str.hasMoreTokens())
+		{
+			str.nextToken();
+			count = str.nextToken();
+			System.out.println("Count status: "+count);
+		}
+		//Assert.assertEquals(21,count);
+	}
+
+}
